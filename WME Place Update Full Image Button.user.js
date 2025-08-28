@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         WME Place Update Full Image Viewer + Downloader
+// @name         WME Full Image Viewer
 // @namespace    http://tampermonkey.net/
-// @version      1.2.1
-// @description  Popup viewer for full-size Place Update Request images in WME, with forced JPG download option and background-close support
+// @version      1.3
+// @description  View and download full-size Place Update Request and Place photos in Waze Map Editor (bypassing thumbnail limits)
 // @author       Firecul
 // @match        https://www.waze.com/editor*
 // @match        https://www.waze.com/*/editor*
