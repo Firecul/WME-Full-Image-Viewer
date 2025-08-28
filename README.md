@@ -1,16 +1,11 @@
 # WME Full Image Viewer
 
+[![Latest Release](https://img.shields.io/github/v/release/Firecul/WME-Full-Image-Viewer?style=for-the-badge&logo=github)](https://github.com/Firecul/WME-Full-Image-Viewer/releases)
+[![Install with Tampermonkey](https://img.shields.io/badge/Install%20with-Tampermonkey-black?logo=tampermonkey&style=for-the-badge)](https://github.com/Firecul/WME-Full-Image-Viewer/raw/refs/heads/main/WME%20Full%20Image%20Viewer.user.js)
+
 A Tampermonkey userscript that enhances the **Waze Map Editor (WME)** photo viewer.  
 By default, WME only shows compressed thumbnails of place photos or Place Update Request (PUR) photos.  
 This script adds a button to **view the full-resolution image** and download it properly as a JPG.
-
----
-
-## 🚀 Install
-
-[![Install directly with Tampermonkey](https://img.shields.io/badge/Install%20with-Tampermonkey-black?logo=tampermonkey&style=for-the-badge)](https://github.com/Firecul/WME-Place-Update-Full-Image-Downloader/raw/refs/heads/main/WME%20Place%20Update%20Full%20Image%20Button.user.js)
-
-> 🔜 A GreasyFork version will be available soon for easier updates and wider userscript manager support.
 
 ---
 
@@ -23,6 +18,16 @@ This script adds a button to **view the full-resolution image** and download it 
   - **Close** button
   - **Download JPG** button (forces correct `.jpg` extension with proper filename)
 - Always works with the **currently displayed photo** — so if you use WME’s built-in arrows, the button updates.
+
+---
+
+## 🚀 Install
+
+Click the button below to install directly with Tampermonkey:
+
+[![Install with Tampermonkey](https://img.shields.io/badge/Install%20with-Tampermonkey-black?logo=tampermonkey&style=for-the-badge)](https://github.com/Firecul/WME-Full-Image-Viewer/raw/refs/heads/main/WME%20Full%20Image%20Viewer.user.js)
+
+> 🔜 A GreasyFork version will be available soon for easier updates and wider userscript manager support.
 
 ---
 
@@ -50,9 +55,9 @@ This script adds a button to **view the full-resolution image** and download it 
 
 - Script name: **WME Full Image Viewer**
 - Author: Firecul
-- Version: 1.3+
-- Repo: [github.com/Firecul/WME-Place-Update-Full-Image-Downloader](https://github.com/Firecul/WME-Place-Update-Full-Image-Downloader)
-- Install link: [Raw script URL](https://github.com/Firecul/WME-Place-Update-Full-Image-Downloader/raw/refs/heads/main/WME%20Place%20Update%20Full%20Image%20Button.user.js)
+- Version: [Latest release](https://github.com/Firecul/WME-Full-Image-Viewer/releases)
+- Repo: [github.com/Firecul/WME-Full-Image-Viewer](https://github.com/Firecul/WME-Full-Image-Viewer)
+- Install link: [Raw script URL](https://github.com/Firecul/WME-Full-Image-Viewer/raw/refs/heads/main/WME%20Full%20Image%20Viewer.user.js)
 
 ---
 
