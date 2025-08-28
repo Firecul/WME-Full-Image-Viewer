@@ -42,8 +42,8 @@
 
         const img = document.createElement('img');
         img.src = fullUrl;
-        img.style.maxWidth = "90%";
-        img.style.maxHeight = "80%";
+        img.style.maxWidth = "95%";
+        img.style.maxHeight = "95%";
         img.style.boxShadow = "0 0 20px #000";
         img.style.border = "4px solid white";
         img.style.borderRadius = "8px";
