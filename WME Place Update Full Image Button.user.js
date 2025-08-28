@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WME Place Update Full Image Viewer + Downloader
 // @namespace    http://tampermonkey.net/
-// @version      1.2
+// @version      1.2.1
 // @description  Popup viewer for full-size Place Update Request images in WME, with forced JPG download option and background-close support
 // @author       Firecul
 // @match        https://www.waze.com/editor*
@@ -97,7 +97,7 @@
         document.body.appendChild(overlay);
     }
 
-    function createButton(imgEl, fullUrl, idPart) {
+    function createButton(imgEl) {
         if (imgEl.parentNode.querySelector('.wme-fullsize-btn')) return; // avoid duplicates
 
         const btn = document.createElement('button');
@@ -109,6 +109,13 @@
         btn.style.cursor = "pointer";
 
         btn.addEventListener('click', () => {
+            const thumbUrl = imgEl.src;
+            const idMatch = thumbUrl.match(/thumb700_([^.?]+)/);
+            if (!idMatch) return;
+            const idPart = idMatch[1];
+            const fullUrl = thumbUrl
+                .replace('/thumbs/thumb700_', '/')
+                .replace(/\.jpg$/i, '');
             showPopup(fullUrl, idPart);
         });
 
