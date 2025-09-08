@@ -1,9 +1,10 @@
 // ==UserScript==
 // @name         WME Full Image Viewer
-// @namespace    http://tampermonkey.net/
+// @namespace    https://github.com/Firecul/WME-Full-Image-Viewer/
 // @version      1.4
 // @description  View and download full-size Place Update Request and Place photos in Waze Map Editor (bypassing thumbnail limits)
 // @author       Firecul
+// @supportURL   https://github.com/Firecul/WME-Full-Image-Viewer/issues/
 // @match        https://www.waze.com/editor*
 // @match        https://www.waze.com/*/editor*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=waze.com
