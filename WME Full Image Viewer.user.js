@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WME Full Image Viewer
 // @namespace    http://tampermonkey.net/
-// @version      1.3
+// @version      1.4
 // @description  View and download full-size Place Update Request and Place photos in Waze Map Editor (bypassing thumbnail limits)
 // @author       Firecul
 // @match        https://www.waze.com/editor*
@@ -19,6 +19,7 @@
         let existing = document.querySelector('#wme-fullimage-popup');
         if (existing) existing.remove();
 
+        // === Overlay ===
         const overlay = document.createElement('div');
         overlay.id = "wme-fullimage-popup";
         overlay.style.position = "fixed";
@@ -31,28 +32,86 @@
         overlay.style.display = "flex";
         overlay.style.justifyContent = "center";
         overlay.style.alignItems = "center";
-        overlay.style.flexDirection = "column";
 
-        // Close on background click
+        // Close overlay on background click
         overlay.addEventListener('click', (e) => {
-            if (e.target === overlay) {
-                overlay.remove();
-            }
+            if (e.target === overlay) overlay.remove();
         });
+
+        // Esc key closes popup
+        const escHandler = (e) => {
+            if (e.key === "Escape") {
+                overlay.remove();
+                document.removeEventListener("keydown", escHandler);
+            }
+        };
+        document.addEventListener("keydown", escHandler);
+
+        // === Modal box ===
+        const modal = document.createElement('div');
+        modal.style.display = "flex";
+        modal.style.flexDirection = "column";
+        modal.style.background = "white";
+        modal.style.borderRadius = "8px";
+        modal.style.boxShadow = "0 0 30px rgba(0,0,0,0.8)";
+        modal.style.maxWidth = "98vw";
+        modal.style.maxHeight = "98vh";
+        modal.style.overflow = "hidden"; // prevent content spill
+        modal.addEventListener('click', (e) => e.stopPropagation());
+
+        // === Header ===
+        const header = document.createElement('div');
+        header.style.display = "flex";
+        header.style.justifyContent = "flex-end";
+        header.style.padding = "6px 10px";
+        header.style.background = "#f5f5f5";
+        header.style.borderBottom = "1px solid #ddd";
+
+        const xBtn = document.createElement('button');
+        xBtn.textContent = "✕";
+        xBtn.style.fontSize = "18px";
+        xBtn.style.cursor = "pointer";
+        xBtn.style.background = "none";
+        xBtn.style.border = "none";
+        xBtn.style.color = "#333";
+        xBtn.addEventListener('click', () => {
+            overlay.remove();
+            document.removeEventListener("keydown", escHandler);
+        });
+
+        header.appendChild(xBtn);
+        modal.appendChild(header);
+
+        // === Image container ===
+        const imgContainer = document.createElement('div');
+        imgContainer.style.flex = "1";
+        imgContainer.style.display = "flex";
+        imgContainer.style.justifyContent = "center";
+        imgContainer.style.alignItems = "center";
+        imgContainer.style.padding = "10px"; // small padding around image
+        imgContainer.style.background = "white"; // clean background
 
         const img = document.createElement('img');
         img.src = fullUrl;
-        img.style.maxWidth = "95%";
-        img.style.maxHeight = "95%";
-        img.style.boxShadow = "0 0 20px #000";
-        img.style.border = "4px solid white";
-        img.style.borderRadius = "8px";
-        img.style.background = "white";
+        img.dataset.id = idPart;
+        img.style.maxWidth = "95vw"; // never overflow screen width
+        img.style.maxHeight = "88vh"; // leave room for header + footer
+        img.style.width = "auto";
+        img.style.height = "auto";
+        img.style.objectFit = "contain"; // maintain aspect ratio
+        img.style.display = "block";
 
-        const btnRow = document.createElement('div');
-        btnRow.style.marginTop = "15px";
-        btnRow.style.display = "flex";
-        btnRow.style.gap = "10px";
+        imgContainer.appendChild(img);
+        modal.appendChild(imgContainer);
+
+        // === Footer ===
+        const footer = document.createElement('div');
+        footer.style.display = "flex";
+        footer.style.justifyContent = "center";
+        footer.style.gap = "10px";
+        footer.style.padding = "10px";
+        footer.style.borderTop = "1px solid #ddd";
+        footer.style.background = "#f5f5f5";
 
         // Download button
         const dlBtn = document.createElement('button');
@@ -63,14 +122,14 @@
             e.stopPropagation(); // don’t trigger background close
             GM_xmlhttpRequest({
                 method: "GET",
-                url: fullUrl,
+                url: img.src,
                 responseType: "blob",
                 onload: function(response) {
                     const blob = response.response;
                     const blobUrl = URL.createObjectURL(blob);
                     const a = document.createElement('a');
                     a.href = blobUrl;
-                    a.download = idPart + ".jpg";
+                    a.download = img.dataset.id + ".jpg";
                     document.body.appendChild(a);
                     a.click();
                     document.body.removeChild(a);
@@ -84,16 +143,17 @@
         closeBtn.textContent = "Close";
         closeBtn.style.padding = "6px 12px";
         closeBtn.style.cursor = "pointer";
-        closeBtn.addEventListener('click', (e) => {
-            e.stopPropagation(); // don’t trigger background close
+        closeBtn.addEventListener('click', () => {
             overlay.remove();
+            document.removeEventListener("keydown", escHandler);
         });
 
-        btnRow.appendChild(dlBtn);
-        btnRow.appendChild(closeBtn);
+        footer.appendChild(dlBtn);
+        footer.appendChild(closeBtn);
+        modal.appendChild(footer);
 
-        overlay.appendChild(img);
-        overlay.appendChild(btnRow);
+        // === Put modal inside overlay ===
+        overlay.appendChild(modal);
         document.body.appendChild(overlay);
     }
 
