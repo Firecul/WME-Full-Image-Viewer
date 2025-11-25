@@ -4,6 +4,14 @@ All notable changes to **WME Full Image Viewer** will be documented here.
 
 ---
 
+## [1.5] - 2025-11-25
+
+### Added
+
+- Compatibility for beta version.
+
+---
+
 ## [1.4] - 2025-09-08
 
 ### Fixed
